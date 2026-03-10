@@ -1,9 +1,9 @@
 [opener]
-open = [
-  { run = 'zathura "$@"', desc = "Open"},
+open-pdf = [
+  { run = 'zathura "$@"', orphan = true, desc = "Open"},
 ]
 
 [open]
 prepend_rules = [
-  { name = "*.pdf", use = "open"}
+  { name = "*.pdf", use = "open-pdf"}
 ]

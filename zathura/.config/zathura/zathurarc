@@ -1,5 +1,5 @@
 # include catppuccin-mocha
-include catppuccin-latte
+# include catppuccin-latte
 set selection-clipboard clipboard
 set recolor false
 # set recolor-lightcolor "#222222"

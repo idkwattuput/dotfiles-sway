@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+THEMES_DIR="$HOME/.config/themes"
+CONFIG_DIR="$HOME/.config"
+CURRENT_THEME_FILE="$HOME/.config/current_theme"
+
+# Step 1: Generate list of themes dynamically
+THEME=$(ls "$THEMES_DIR" | rofi -dmenu -i -p "")
+
+# If nothing selected, exit
+[ -z "$THEME" ] && exit
+
+# If theme directory doesn't exist
+if [ ! -d "$THEMES_DIR/$THEME" ]; then
+    notify-send "Theme Switcher" "Theme '$THEME' not found!"
+    exit 1
+fi
+
+# ==============================
+# SAVE CURRENT THEME
+# ==============================
+echo "$THEME" > "$CURRENT_THEME_FILE"
+
+
+# ==============================
+# SWAY
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/sway.conf" "$CONFIG_DIR/sway/config.d/theme-colors.conf"
+swaymsg reload
+
+# ==============================
+# ROFI
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/rofi.rasi" "$CONFIG_DIR/rofi/color.rasi"
+
+# ==============================
+# DUNST
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/dunstrc" "$CONFIG_DIR/dunst/dunstrc"
+pkill dunst
+dunst &
+
+# ==============================
+# KITTY
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/kitty.conf" "$CONFIG_DIR/kitty/theme.conf"
+kill -SIGUSR1 "$(pidof kitty)" 2>/dev/null
+
+# ==============================
+# WAYBAR
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/waybar.css" "$CONFIG_DIR/waybar/style.css"
+pkill -SIGUSR2 waybar
+
+# ==============================
+# SWAYLOCK
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/swaylock" "$CONFIG_DIR/swaylock/config"
+
+# ==============================
+# TMUX
+# ==============================
+ln -sf "$THEMES_DIR/$THEME/tmux.conf" "$CONFIG_DIR/tmux/tmux.conf"
+
+if tmux info &>/dev/null; then
+    tmux source-file "$CONFIG_DIR/tmux/tmux.conf"
+fi
+
+# ==============================
+# CHANGE WALLPAPER
+# ==============================
+WALLPAPER_DIR="$THEMES_DIR/$THEME/wallpapers"
+
+if [ -d "$WALLPAPER_DIR" ]; then
+    # Grab the first wallpaper in the folder (jpg or png)
+    WALLPAPER=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.png" \) | shuf -n 1)
+
+    if [ -n "$WALLPAPER" ]; then
+        swww img "$WALLPAPER" --transition-type any --transition-fps 60
+    else
+        notify-send "Theme Switcher" "No wallpapers found in: $WALLPAPER_DIR"
+    fi
+else
+    notify-send "Theme Switcher" "No wallpaper folder in theme: $THEME"
+fi
+
+# ==============================
+# DONE — notify user
+# ==============================
+notify-send "Theme Applied" "Switched to: $THEME"

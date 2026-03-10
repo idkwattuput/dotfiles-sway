@@ -1,3 +1,5 @@
+@import "color"
+
 configuration {
 	font: "JetBrainsMono Nerd Font Medium 12";
 	modi: "window";
@@ -5,73 +7,159 @@ configuration {
 	icon-theme: "Papirus";
 }
 
-@theme "/dev/null"
+@theme "color"
 
 * {
-	bg: #1e1e2e;
-	bg-alt: #cba6f7;
-	fg: #cdd6f4;
-	fg-alt: #181825;
-	background-color: @bg;
 	border: 2px;
 	margin: 0;
 	padding: 0;
 	spacing: 0;
 }
 
+/*****----- Main Window -----*****/
 window {
-	width: 70%;
-	border-color: @bg-alt;
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       70%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            @background;
+    cursor:                      "default";
 }
 
-element {
-	padding: 12;
-	text-color: @fg;
-  orientation: vertical;
-}
-
-element selected {
-	background-color: @bg-alt;
-	text-color: @fg-alt;
-}
-
-element-text {
-	background-color: inherit;
-	text-color: inherit;
-	horizontal-align: 0.5;
-  text-align: center;
-}
-
-element-icon {
-	size: 500;
-	background-color: transparent;
-	horizontal-align: 0.5;
-}
-
-entry {
-	background-color: @bg;
-	padding: 12;
-	text-color: @fg;
-}
-
-inputbar {
-	children: [prompt,entry];
-}
-
-listview {
-	background-color :@bg;
-	columns: 3;
-	lines: 1;
-}
-
+/*****----- Main Box -----*****/
 mainbox {
-	backgorund-color: @bg;
-	children: [inputbar, listview];
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     20px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @selected;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+    children:                    [ "prompt", "entry" ];
 }
 
 prompt {
-	background-color: @bg;
-	enabled: true;
-	padding: 12 0 0 12;
-	text-color: @fg;
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "::";
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+entry {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     3;
+    lines:                       1;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     5px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      "default";
+}
+scrollbar {
+    handle-width:                5px ;
+    handle-color:                @selected;
+    border-radius:               0px;
+    background-color:            @background-alt;
+}
+
+/*****----- Elements -----*****/
+element {
+    orientation: vertical;
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     5px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color:            @background;
+    text-color:                  @foreground;
+}
+element selected.normal {
+    background-color:            @selected;
+    text-color:                  @background;
+}
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        500;
+    cursor:                      inherit;
+}
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    horizontal-align: 0.5;
+    text-align: center;
+}
+
+/*****----- Message -----*****/
+error-message {
+    padding:                     15px;
+    border:                      2px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            @background;
+    text-color:                  @foreground;
+}
+textbox {
+    background-color:            @background;
+    text-color:                  @foreground;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    highlight:                   none;
 }

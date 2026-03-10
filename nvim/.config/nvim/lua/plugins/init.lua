@@ -46,6 +46,7 @@ return {
         "cmake",
         "cpp",
         "make",
+        "java",
       },
       highlight = { enable = true },
       indent = { enable = true },

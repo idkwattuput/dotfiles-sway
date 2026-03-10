@@ -1,25 +1,38 @@
 #!/usr/bin/env bash
 
-# Folder containing your wallpapers
-WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+# Read current theme (e.g. "gruvbox-light")
+THEME_FILE="$HOME/.config/current_theme"
+if [ -f "$THEME_FILE" ]; then
+    CURRENT_THEME=$(cat "$THEME_FILE")
+else
+    rofi -e "Theme file not found: $THEME_FILE"
+    exit 1
+fi
 
-# Use rofi to pick a file
-# SELECTED=$(find "$WALLPAPER_DIR" -type f | rofi -dmenu -p "Choose wallpaper:")
+# Wallpaper directory based on theme
+WALLPAPER_DIR="$HOME/.config/themes/$CURRENT_THEME/wallpapers"
 
-# Current directory (to cd back to)
+# Ensure folder exists
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    rofi -e "Wallpaper folder not found: $WALLPAPER_DIR"
+    exit 1
+fi
+
+# Save working directory
 CWD="$(pwd)"
-
 cd "$WALLPAPER_DIR" || exit
 
-# Handle spaces in filenames
 IFS=$'\n'
 
-# Gra the user-selected wallpaper
-SELECTED=$(for a in *.jpg *.png; do echo -en "$a\0icon\x1f$a\n" ; done | rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Choose wallpaper:")
+# Rofi wallpaper picker with icons
+SELECTED=$(for a in *.jpg *.png; do
+    [ -e "$a" ] || continue
+    echo -en "$a\0icon\x1f$a\n"
+done | rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Choose wallpaper:")
 
-# If a file was selected, set it using swww
+# Apply wallpaper through swww
 if [ -n "$SELECTED" ]; then
-    swww img "$SELECTED" --transition-type any --transition-fps 60
+    swww img "$WALLPAPER_DIR/$SELECTED" --transition-type any --transition-fps 60
 fi
 
 cd "$CWD" || exit
