@@ -1,0 +1,19 @@
+[global]
+font = JetBrainsMono Nerd Font 14
+follow = mouse
+frame_color = "#b57614"
+separator_color = frame
+highlight = "#b57614"
+
+[urgency_low]
+background = "#fbf1c7"
+foreground = "#3c3836"
+
+[urgency_normal]
+background = "#fbf1c7"
+foreground = "#3c3836"
+
+[urgency_critical]
+background = "#fbf1c7"
+foreground = "#3c3836"
+frame_color = "#9d0006"

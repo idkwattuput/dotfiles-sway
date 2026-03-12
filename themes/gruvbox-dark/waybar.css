@@ -1,0 +1,190 @@
+* {
+  font-family:
+    JetBrainsMono Nerd Font,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+/* Gruvbox Colors */
+@define-color bg      #1d2021;
+@define-color bg2     #282828;
+@define-color fg      #ebdbb2;
+@define-color fg2     #d5c4a1;
+
+@define-color red     #fb4934;
+@define-color green   #b8bb26;
+@define-color yellow  #fabd2f;
+@define-color blue    #83a598;
+@define-color purple  #d3869b;
+@define-color aqua    #8ec07c;
+@define-color orange  #fe8019;
+
+@define-color gray1   #3c3836;
+@define-color gray2   #504945;
+@define-color gray3   #665c54;
+
+/* Window */
+window#waybar {
+  background-color: @bg;
+  color: @fg;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* Buttons */
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+}
+
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px @fg;
+}
+
+/* Workspaces */
+#workspaces button {
+  padding: 0 5px;
+  background-color: transparent;
+  color: @fg;
+}
+
+#workspaces button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button.focused {
+  box-shadow: inset 0 -3px @yellow;
+}
+
+#workspaces button.urgent {
+  background-color: @red;
+}
+
+/* Modes */
+#mode {
+  background-color: @gray2;
+  box-shadow: inset 0 -3px @yellow;
+}
+
+/* Arch Icon */
+#custom-arch {
+  font-size: 18px;
+  margin-right: 2px;
+  color: @blue;
+}
+
+/* Modules Shared */
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd {
+  padding: 0 10px;
+  color: @fg;
+  background-color: transparent;
+}
+
+/* Clock */
+#clock {
+  background-color: transparent;
+}
+
+/* Battery */
+#battery {
+  color: @fg;
+}
+
+@keyframes blink {
+  to {
+    background-color: @fg;
+    color: #000000;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: @red;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Power Profiles */
+#power-profiles-daemon {
+  padding-right: 15px;
+}
+
+#power-profiles-daemon.performance {
+  background-color: @red;
+  color: @fg;
+}
+
+#power-profiles-daemon.balanced {
+  background-color: @blue;
+  color: @fg;
+}
+
+#power-profiles-daemon.power-saver {
+  background-color: @green;
+  color: #000000;
+}
+
+/* Focus */
+label:focus {
+  background-color: #000000;
+}
+
+/* Network */
+#network {
+  background-color: transparent;
+  color: @fg;
+}
+
+#network.disconnected {
+  background-color: @red;
+}
+
+/* Audio */
+#pulseaudio {
+  background-color: transparent;
+  color: @fg;
+}
+
+#pulseaudio.muted {
+  background-color: @gray3;
+  color: @bg;
+}
+
+/* WirePlumber */
+#wireplumber {
+  background-color: @purple;
+  color: #000000;
+}
+
+#wireplumber.muted {
+  background-color: @red;
+}
