@@ -30,7 +30,7 @@ exec swayidle -w \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          before-sleep 'swaylock --screenshots --ignore-empty-password --daemonize --indicator-caps-lock --indicator --clock --timestr "󰥔 %Hh %Mm %Ss" --datestr "󰃭 %b-%d-%Y" --show-failed-attempts --indicator-idle-visible'
 
-exec_always swww-daemon
+exec_always awww-daemon
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when

@@ -30,9 +30,9 @@ SELECTED=$(for a in *.jpg *.png; do
     echo -en "$a\0icon\x1f$a\n"
 done | rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Choose wallpaper:")
 
-# Apply wallpaper through swww
+# Apply wallpaper through awww
 if [ -n "$SELECTED" ]; then
-    swww img "$WALLPAPER_DIR/$SELECTED" --transition-type any --transition-fps 60
+    awww img "$WALLPAPER_DIR/$SELECTED" --transition-type any --transition-fps 60
 fi
 
 cd "$CWD" || exit
